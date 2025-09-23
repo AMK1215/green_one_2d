@@ -1,0 +1,33 @@
+/* Choose Number specific styles */
+.choose-number-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.quick-select-btn {
+  transition: all 0.3s ease;
+}
+
+.quick-select-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.number-item {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.number-item:hover {
+  transform: scale(1.05);
+}

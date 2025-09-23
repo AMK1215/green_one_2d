@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+/* Custom styles for GoldenMM */
+.gradient-bg {
+  background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 50%, #16213E 100%);
+  min-height: 100vh;
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.glass-effect {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+}
+
+/* Modern input focus effects */
+input:focus {
+  caret-color: #FFD700;
+}
+
+/* Custom checkbox styling */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Smooth animations */
+* {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFD700;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8860B;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee 30s linear infinite;
+}

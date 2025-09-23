@@ -1,0 +1,944 @@
+/* Custom styles for 2D pages with project theme colors */
+
+.lottoHomeContainer {
+    background: rgba(26, 26, 46, 0.9);
+    color: #FFD700;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.twoDBetBtn {
+    position: fixed;
+    bottom: 40px;
+    left: 46%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: max-content;
+}
+
+.modal {
+    top: 20% !important;
+    margin: 0 auto !important;
+    left: auto !important;
+}
+
+.timeBtn {
+    background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+    color: #0F0F23;
+    width: 100%;
+    text-align: center;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+}
+
+/* Bootstrap 5 compatible hover effects */
+.hover-bg-light:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Custom cursor for clickable elements */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Custom progress bar colors for 2D numbers */
+.progress-bar-green {
+    background-color: #00CD15 !important;
+}
+
+.progress-bar-orange {
+    background-color: #FF7A00 !important;
+}
+
+.progress-bar-red {
+    background-color: #FF0000 !important;
+}
+
+.progress-bar-gray {
+    background-color: #AE9F9E !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 680px) {
+    .twoDBetBtn {
+        left: 40%;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .twoDBetBtn {
+        left: 35%;
+    }
+}
+
+/* Clean Static Elements - No Shaking Animations */
+.card-hover:hover {
+    /* Removed transform animations for cleaner experience */
+}
+
+.btn-hover:hover {
+    /* Removed scale animations for cleaner experience */
+}
+
+/* Clean number grid styling */
+.number-grid-item {
+    transition: none;
+}
+
+.number-grid-item:hover {
+    /* Removed transform animations */
+}
+
+.number-grid-item.active {
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+/* Custom modal styling */
+.modal-content {
+    border-radius: 1rem !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+.modal-header {
+    border-bottom: 1px solid #dee2e6 !important;
+    padding: 1rem 1.5rem !important;
+}
+
+.modal-body {
+    padding: 1.5rem !important;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6 !important;
+    padding: 1rem 1.5rem !important;
+}
+
+/* Custom form styling */
+.form-control:focus {
+    border-color: #4B5AB5 !important;
+    box-shadow: 0 0 0 0.2rem rgba(75, 90, 181, 0.25) !important;
+}
+
+/* Custom button styling */
+.btn-primary {
+    background-color: #4B5AB5 !important;
+    border-color: #4B5AB5 !important;
+}
+
+.btn-primary:hover {
+    background-color: #3a4a9a !important;
+    border-color: #3a4a9a !important;
+}
+
+.btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.btn-danger:hover {
+    background-color: #c82333 !important;
+    border-color: #bd2130 !important;
+}
+
+.btn-success {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+}
+
+.btn-success:hover {
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+}
+
+.twoD-gradient-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 50%, #16213E 100%);
+    position: relative;
+}
+
+.twoD-gradient-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Ultra-Modern Card Design */
+.twoD-card {
+    background: rgba(26, 26, 46, 0.95);
+    border-radius: 2rem;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 8px 32px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #FFFFFF;
+    backdrop-filter: blur(25px) saturate(180%);
+    position: relative;
+    overflow: hidden;
+    transition: none;
+}
+
+.twoD-card:hover {
+    /* Removed excessive transform animations for cleaner experience */
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 8px 32px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.twoD-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.8), transparent);
+    /* Removed shimmer animation for cleaner experience */
+}
+
+.twoD-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Clean Static Number Cards - No Shaking Animations */
+.twoD-number-card {
+    transition: none;
+    border-radius: 1.5rem !important;
+    cursor: pointer;
+    border: 2px solid rgba(255, 215, 0, 0.2) !important;
+    background: rgba(26, 26, 46, 0.8) !important;
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+    color: #FFFFFF !important;
+}
+
+.twoD-number-card:hover {
+    border: 2px solid rgba(255, 215, 0, 0.5) !important;
+    background: rgba(26, 26, 46, 0.9) !important;
+}
+
+.twoD-number-card.active {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.2) 100%) !important;
+    color: #FFFFFF !important;
+    border: 2px solid rgba(255, 215, 0, 0.6) !important;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+/* Removed pulse animation for more subtle selection effect */
+
+/* Grid scrolling improvements */
+.number-grid-container {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 215, 0, 0.6) rgba(26, 26, 46, 0.8);
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    /* Ensure scrolling works on touch devices */
+    -webkit-overflow-scrolling: touch;
+    /* Ensure grid has relative positioning for the fade effect */
+    position: relative;
+    /* Force scrolling by ensuring content height exceeds container */
+    min-height: 0;
+}
+
+.number-grid-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.number-grid-container::-webkit-scrollbar-track {
+    background: rgba(26, 26, 46, 0.8);
+    border-radius: 4px;
+    margin: 4px 0;
+}
+
+.number-grid-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.6) 0%, rgba(255, 165, 0, 0.6) 100%);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.number-grid-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.8) 0%, rgba(255, 165, 0, 0.8) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+}
+
+.number-grid-container::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.9) 0%, rgba(255, 165, 0, 0.9) 100%);
+}
+
+/* Mobile scrolling improvements */
+@media (max-width: 768px) {
+    .number-grid-container {
+        max-height: 250px;
+    }
+    
+    .number-grid-container::-webkit-scrollbar {
+        width: 6px;
+    }
+}
+
+/* Scroll fade effect to indicate more content */
+.number-grid-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(transparent, rgba(26, 26, 46, 0.8));
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Ensure grid content is properly sized for scrolling */
+.number-grid-container .grid {
+    min-height: 100%;
+    padding-bottom: 20px; /* Add padding to ensure last row is visible */
+    /* Force grid to be tall enough to trigger scrolling */
+    height: auto;
+    min-height: 1200px; /* 20 rows × 60px per row */
+}
+
+/* Force grid items to maintain consistent height */
+.number-grid-container .twoD-number-card {
+    min-height: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ensure scrolling works on all devices */
+.number-grid-container {
+    /* Force scrolling to work */
+    height: 300px;
+    max-height: 300px;
+    /* Ensure content overflows */
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+}
+
+
+/* TwoD Confirm Page Specific Styles */
+.confirm-page-card {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 8px 32px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.bet-item-card {
+    background: linear-gradient(135deg, rgba(55, 65, 81, 0.8) 0%, rgba(31, 41, 55, 0.8) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    transition: none;
+}
+
+.bet-item-card:hover {
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+.number-display-box {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.1) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+.total-section {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.05) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+}
+
+/* Ultra-Modern Floating Action Button */
+.twoD-fab {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #0F0F23;
+    border: 3px solid rgba(255, 215, 0, 0.8);
+    border-radius: 3rem;
+    box-shadow: 
+        0 15px 50px rgba(255, 215, 0, 0.4),
+        0 0 30px rgba(255, 215, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    font-size: 1.3rem;
+    font-weight: 800;
+    padding: 1rem 3rem;
+    position: fixed;
+    left: 50%;
+    bottom: 5rem;
+    transform: translateX(-50%);
+    z-index: 40;
+    transition: none;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.twoD-fab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.twoD-fab:hover::before {
+    left: 100%;
+}
+
+.twoD-fab:hover {
+    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+    box-shadow: 
+        0 25px 80px rgba(255, 215, 0, 0.6),
+        0 0 50px rgba(255, 215, 0, 0.5),
+        inset 0 2px 0 rgba(255, 255, 255, 0.4);
+    transform: translateY(-4px) scale(1.05) !important;
+    border: 3px solid rgba(255, 215, 0, 1);
+}
+
+.twoD-fab:active {
+    transform: translateY(-2px) scale(0.98) !important;
+}
+
+.twoD-confirm-bg {
+    background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 50%, #16213E 100%);
+    min-height: 100vh;
+}
+
+.twoD-card {
+    background: rgba(255,255,255,0.98);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 24px 0 rgba(80, 80, 200, 0.10);
+    border: none;
+}
+
+.bet-card {
+    background: rgba(26, 26, 46, 0.8);
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px 0 rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #FFD700;
+}
+
+.bet-number {
+    color: #FFD700;
+}
+
+.tag-btn {
+    border: none;
+    border-radius: 1rem;
+    padding: 0.3rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tag-blue {
+    background: #e3f0ff;
+    color: #4f8cff;
+}
+
+.tag-blue:hover {
+    background: #4f8cff;
+    color: #fff;
+}
+
+.tag-red {
+    background: #ffe3e3;
+    color: #ff4f81;
+}
+
+.tag-red:hover {
+    background: #ff4f81;
+    color: #fff;
+}
+
+.modern-btn {
+    background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+    color: #0F0F23 !important;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    border-radius: 1.2rem;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.modern-btn:hover, .modern-btn:focus {
+    background: linear-gradient(135deg, #B8860B 0%, #FFD700 100%);
+    color: #0F0F23 !important;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+.modern-confirm-btn {
+    background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+    color: #0F0F23;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 0.8rem 2.5rem;
+    box-shadow: 0 4px 24px 0 rgba(255, 215, 0, 0.25);
+    transition: background 0.2s;
+}
+
+.modern-confirm-btn:hover {
+    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+    box-shadow: 0 8px 25px 0 rgba(255, 215, 0, 0.4);
+}
+
+/* Ultra-Modern Glass Morphism */
+.glass-effect {
+    background: rgba(26, 26, 46, 0.85);
+    backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(255, 215, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+}
+
+.glass-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Ultra-Modern Animated Background */
+.animated-bg {
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+        linear-gradient(-45deg, #0F0F23, #1A1A2E, #16213E, #0F0F23);
+    background-size: 400% 400%, 300% 300%, 200% 200%, 400% 400%;
+    animation: gradientShift 20s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.animated-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(255, 165, 0, 0.08) 0%, transparent 30%);
+    /* Removed float animation for cleaner experience */
+    pointer-events: none;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%, 0% 0%, 0% 0%, 0% 50%; }
+    50% { background-position: 100% 50%, 100% 100%, 50% 50%, 100% 50%; }
+    100% { background-position: 0% 50%, 0% 0%, 0% 0%, 0% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Glow Effect for Important Elements */
+.glow-effect {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    /* Removed glow animation for cleaner experience */
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+    to { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+}
+
+/* Ultra-Modern Button Styles */
+.modern-btn-primary {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #0F0F23;
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    border-radius: 1.5rem;
+    padding: 1rem 2rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: none;
+    box-shadow: 
+        0 8px 25px rgba(255, 215, 0, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+}
+
+.modern-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.modern-btn-primary:hover::before {
+    left: 100%;
+}
+
+.modern-btn-primary:hover {
+    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+    box-shadow: 
+        0 8px 25px rgba(255, 215, 0, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(255, 215, 0, 1);
+}
+
+.modern-btn-primary:active {
+    /* Removed transform animations for cleaner experience */
+}
+
+/* Secondary Button Style */
+.modern-btn-secondary {
+    background: rgba(26, 26, 46, 0.9);
+    color: #FFD700;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 1.5rem;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+}
+
+.modern-btn-secondary:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+/* Status Colors */
+.status-success { color: #00CD15; }
+.status-warning { color: #FF7A00; }
+.status-error { color: #FF4444; }
+.status-info { color: #4A90E2; }
+
+/* Text Color Overrides for Dark Theme */
+.twoD-page * {
+    color: inherit;
+}
+
+.twoD-page h1, .twoD-page h2, .twoD-page h3, .twoD-page h4, .twoD-page h5, .twoD-page h6 {
+    color: #FFFFFF !important;
+}
+
+.twoD-page p, .twoD-page span, .twoD-page div {
+    color: #E5E5E5 !important;
+}
+
+.twoD-page .text-gold {
+    color: #FFD700 !important;
+}
+
+.twoD-page .text-gray-300 {
+    color: #D1D5DB !important;
+}
+
+.twoD-page .text-gray-200 {
+    color: #E5E7EB !important;
+}
+
+/* Input and Select Styling */
+.twoD-page input, .twoD-page select, .twoD-page textarea {
+    color: #FFFFFF !important;
+    background-color: rgba(31, 41, 55, 0.8) !important;
+}
+
+.twoD-page input::placeholder, .twoD-page select::placeholder, .twoD-page textarea::placeholder {
+    color: #9CA3AF !important;
+}
+
+/* Ultra-Modern Loading Animations */
+.modern-loading {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    border-top-color: #FFD700;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Particle Effect Background */
+.particle-bg {
+    position: relative;
+    overflow: hidden;
+}
+
+.particle-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 165, 0, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 165, 0, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 150px 100px;
+    /* Removed particle float animation for cleaner experience */
+    pointer-events: none;
+}
+
+@keyframes particleFloat {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-100px); }
+}
+
+/* Modern Typography */
+.modern-title {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.modern-subtitle {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #E5E7EB;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Clean Hover Effects - No Shaking */
+.hover-lift {
+    transition: none;
+}
+
+.hover-lift:hover {
+    /* Removed transform animations for cleaner experience */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Modern Input Fields */
+.modern-input {
+    background: rgba(26, 26, 46, 0.8);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: none;
+    backdrop-filter: blur(15px);
+}
+
+.modern-input:focus {
+    outline: none;
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    background: rgba(26, 26, 46, 0.9);
+}
+
+.modern-input::placeholder {
+    color: #9CA3AF;
+    font-weight: 400;
+}
+
+/* Ultra-Modern Progress Bars */
+.modern-progress {
+    background: rgba(26, 26, 46, 0.8);
+    border-radius: 1rem;
+    height: 8px;
+    overflow: hidden;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.modern-progress-bar {
+    background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+    height: 100%;
+    border-radius: 1rem;
+    position: relative;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.modern-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    /* Removed progress shimmer animation for cleaner experience */
+}
+
+@keyframes progressShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Footer Spacing Fix */
+.twoD-page {
+    padding-bottom: 6rem; /* Ensure content doesn't get hidden behind footer */
+}
+
+/* Ensure proper button positioning above footer */
+.twoD-fab {
+    /* Button styling for sticky placement below live data */
+    position: sticky !important;
+    top: 1rem !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    z-index: 30 !important;
+    width: 100% !important;
+    min-width: 200px !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Footer z-index adjustment */
+footer {
+    z-index: 50 !important;
+}
+
+/* Modal positioning and styling improvements */
+.modal {
+    z-index: 1050 !important;
+}
+
+.modal-dialog {
+    margin: 1.75rem auto !important;
+    max-width: 500px !important;
+}
+
+.modal-content {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(4px) !important;
+}
+
+/* Custom modal styling for time selection */
+.time-selection-modal {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(17, 24, 39, 0.95) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 215, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.time-selection-header {
+    background: linear-gradient(135deg, rgba(55, 65, 81, 0.8) 0%, rgba(31, 41, 55, 0.8) 100%);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.time-selection-button {
+    background: linear-gradient(135deg, rgba(55, 65, 81, 0.8) 0%, rgba(75, 85, 99, 0.8) 100%);
+    border: 1px solid rgba(156, 163, 175, 0.5);
+    transition: none;
+}
+
+.time-selection-button:hover {
+    background: linear-gradient(135deg, rgba(75, 85, 99, 0.9) 0%, rgba(107, 114, 128, 0.9) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.time-selection-button:active {
+    /* Removed transform animations for cleaner experience */
+}
+
+/* Sticky button container */
+.twoD-fab {
+    /* Add backdrop blur for better visibility when sticky */
+    backdrop-filter: blur(10px) !important;
+    /* Ensure it stays visible when scrolling */
+    box-shadow: 
+        0 15px 50px rgba(255, 215, 0, 0.4),
+        0 0 30px rgba(255, 215, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3),
+        0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}

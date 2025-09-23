@@ -1,0 +1,23 @@
+/* Additional Tailwind utilities for 2D pages */
+@import "tailwindcss";
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-center {
+  scroll-snap-align: center;
+}
+
+.snap-mandatory {
+  scroll-snap-type: x mandatory;
+}
