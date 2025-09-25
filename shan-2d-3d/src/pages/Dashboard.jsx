@@ -1,22 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { LanguageContext } from '../contexts/LanguageContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import BannerSlider from '../components/BannerSlider';
 import Marquee from '../components/Marquee';
 
 const Dashboard = () => {
     const { user } = useAuth();
+    const languageContext = useContext(LanguageContext);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const type = searchParams.get("type");
     const provider = searchParams.get("provider");
+    
+    // Add error handling for missing context
+    if (!languageContext) {
+        console.error('Dashboard must be used within a LanguageProvider');
+        return <div>Loading...</div>;
+    }
+    
+    const { t } = languageContext;
 
     const gameCategories = [
         {
             id: '2d',
-            name: '2D',
+            name: t('two_d'),
             image: '/TemplateData/game_type/2d_lottery.png',
-            buttonText: '2D'
+            buttonText: t('two_d')
         },
         {
             id: 'shankomee',
@@ -32,9 +42,9 @@ const Dashboard = () => {
         },
         {
             id: '3d',
-            name: '3D',
+            name: t('three_d'),
             image: '/TemplateData/game_type/3d_lottery.png',
-            buttonText: '3D'
+            buttonText: t('three_d')
         }
     ];
 
@@ -227,7 +237,7 @@ const Dashboard = () => {
                             : "from-slate-800/80 to-slate-900/80 hover:from-yellow-200/30 hover:to-orange-200/30 hover:border-yellow-400/60"}
                     `}
                     style={{boxShadow: '0 2px 12px 0 rgba(0,0,0,0.14)'}}
-                    onClick={() => navigate("/?type=3d")}
+                    onClick={() => navigate("/3d")}
                 >
                     <div className="relative w-14 h-14 aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-yellow-400/70 via-white/10 to-yellow-600/70 p-1 group-hover:from-yellow-400 group-hover:to-orange-400 group-hover:shadow-2xl transition-all duration-200 flex items-center justify-center">
                         <div className="w-full h-full bg-black/60 rounded-2xl flex items-center justify-center group-hover:bg-black/80 transition-all duration-200">
@@ -320,13 +330,13 @@ const Dashboard = () => {
                     <div className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 rounded-lg border border-yellow-400/30 p-6">
                         <div className="text-center">
                             <div className="text-4xl mb-4">💰</div>
-                            <h3 className="text-xl font-semibold text-yellow-400 mb-2">Quick Deposit</h3>
+                            <h3 className="text-xl font-semibold text-yellow-400 mb-2">{t('deposit')}</h3>
                             <p className="text-gray-400 mb-4">Add funds instantly</p>
                             <button 
                                 onClick={() => navigate('/deposit')}
                                 className="bg-yellow-400 text-black px-6 py-3 rounded-md font-semibold hover:bg-yellow-300 transition-colors duration-200 hover:scale-105"
                             >
-                                Deposit Now
+                                {t('deposit')}
                             </button>
                         </div>
                     </div>
@@ -334,13 +344,13 @@ const Dashboard = () => {
                     <div className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 rounded-lg border border-yellow-400/30 p-6">
                         <div className="text-center">
                             <div className="text-4xl mb-4">💸</div>
-                            <h3 className="text-xl font-semibold text-yellow-400 mb-2">Quick Withdraw</h3>
+                            <h3 className="text-xl font-semibold text-yellow-400 mb-2">{t('withdraw')}</h3>
                             <p className="text-gray-400 mb-4">Cash out your winnings</p>
                             <button 
                                 onClick={() => navigate('/withdraw')}
                                 className="bg-yellow-400 text-black px-6 py-3 rounded-md font-semibold hover:bg-yellow-300 transition-colors duration-200 hover:scale-105"
                             >
-                                Withdraw Now
+                                {t('withdraw')}
                             </button>
                         </div>
                     </div>

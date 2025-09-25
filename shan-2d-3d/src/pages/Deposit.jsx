@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { LanguageContext } from '../contexts/LanguageContext';
 import apiService from '../services/apiService';
 import { Spinner } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 const Deposit = () => {
   const [show, setShow] = useState(false);
@@ -19,6 +21,15 @@ const Deposit = () => {
   
   const { user } = useAuth();
   const navigate = useNavigate();
+  const languageContext = useContext(LanguageContext);
+  
+  // Add error handling for missing context
+  if (!languageContext) {
+    console.error('Deposit must be used within a LanguageProvider');
+    return <div>Loading...</div>;
+  }
+  
+  const { t } = languageContext;
 
   useEffect(() => {
     loadBanks();
@@ -161,15 +172,15 @@ const Deposit = () => {
       <div className="container mx-auto px-4 py-6 pb-24">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">Deposit Funds</h2>
-          <p className="text-white text-sm md:text-base opacity-90">Add money to your gaming account</p>
+          <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">{t('deposit')}</h2>
+          <p className="text-white text-sm md:text-base opacity-90">{t('add_money_to_account')}</p>
         </div>
 
         {/* Balance Card */}
         <div className="mb-8 max-w-md mx-auto">
           <div className="bg-gradient-to-r from-gold to-yellow-400 rounded-lg px-6 py-4 shadow-lg">
             <div className="text-center">
-              <p className="text-xs text-gray-800 font-medium">Current Balance</p>
+              <p className="text-xs text-gray-800 font-medium">{t('current_balance')}</p>
               <div className="text-2xl font-bold text-gray-900">
                 {balanceLoading ? (
                   <div className="animate-pulse">Loading...</div>
@@ -186,13 +197,13 @@ const Deposit = () => {
           <form onSubmit={deposit} className="space-y-6">
             {/* Header with Choose Bank Button */}
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-white text-xl font-bold">Deposit</h3>
+              <h3 className="text-white text-xl font-bold">{t('deposit')}</h3>
               <button
                 type="button"
                 className="px-4 py-2 rounded-lg bg-white text-black hover:bg-gray-100 transition-all duration-300 font-bold shadow-lg border-2 border-gold"
                 onClick={() => setShow(true)}
               >
-                Choose Bank
+                {t('select_bank')}
               </button>
             </div>
 
@@ -239,7 +250,7 @@ const Deposit = () => {
 
             {/* Amount Input */}
             <div className="space-y-2">
-              <label className="block text-white text-sm font-bold">Amount (MMK) <span className="text-red-400">*</span></label>
+              <label className="block text-white text-sm font-bold">{t('deposit_amount')} (MMK) <span className="text-red-400">*</span></label>
               <input
                 type="number"
                 className="w-full px-4 py-4 bg-white/20 border-2 border-gold/50 rounded-lg text-white placeholder-gray-200 focus:outline-none focus:border-gold focus:bg-white/30 transition-all duration-300 text-lg font-medium"
@@ -255,7 +266,7 @@ const Deposit = () => {
 
             {/* Reference Input */}
             <div className="space-y-2">
-              <label className="block text-white text-sm font-bold">Reference Number <span className="text-red-400">*</span></label>
+              <label className="block text-white text-sm font-bold">{t('reference_number')} <span className="text-red-400">*</span></label>
               <input
                 type="text"
                 className="w-full px-4 py-4 bg-white/20 border-2 border-gold/50 rounded-lg text-white placeholder-gray-200 focus:outline-none focus:border-gold focus:bg-white/30 transition-all duration-300 text-lg font-medium"
@@ -280,7 +291,7 @@ const Deposit = () => {
                     Processing...
                   </div>
                 ) : (
-                  'Submit Deposit'
+                  t('submit_deposit')
                 )}
               </button>
             </div>
@@ -291,8 +302,8 @@ const Deposit = () => {
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
               <div className="bg-gray-800 rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4 relative border border-gold/30">
                 <div className="text-center mb-6">
-                  <h5 className="font-bold text-xl text-gold">Choose Bank</h5>
-                  <p className="text-white text-sm mt-1 opacity-90">Select a payment method</p>
+                  <h5 className="font-bold text-xl text-gold">{t('select_bank')}</h5>
+                  <p className="text-white text-sm mt-1 opacity-90">{t('select_payment_method')}</p>
                 </div>
                 <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
                   {banks?.length > 0 ? banks.map((bank, index) => (

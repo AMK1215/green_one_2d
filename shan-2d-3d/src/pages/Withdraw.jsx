@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { LanguageContext } from '../contexts/LanguageContext';
 import apiService from '../services/apiService';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 const Withdraw = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,15 @@ const Withdraw = () => {
   
   const { user } = useAuth();
   const navigate = useNavigate();
+  const languageContext = useContext(LanguageContext);
+  
+  // Add error handling for missing context
+  if (!languageContext) {
+    console.error('Withdraw must be used within a LanguageProvider');
+    return <div>Loading...</div>;
+  }
+  
+  const { t } = languageContext;
 
   const quickAmounts = [10000, 25000, 50000, 100000, 200000, 500000];
 
@@ -122,8 +133,8 @@ const Withdraw = () => {
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">Withdraw Funds</h2>
-          <p className="text-gold text-sm md:text-base">Cash out your winnings</p>
+          <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">{t('withdraw')}</h2>
+          <p className="text-gold text-sm md:text-base">{t('cash_out_winnings')}</p>
         </div>
 
         {/* Balance Card */}
@@ -138,13 +149,13 @@ const Withdraw = () => {
 
         {/* Withdraw Form */}
         <div className="glass-effect rounded-2xl p-6 md:p-8 shadow-2xl max-w-md mx-auto">
-          <h3 className="text-white text-xl font-bold text-center mb-6">Withdrawal Request</h3>
+          <h3 className="text-white text-xl font-bold text-center mb-6">{t('withdrawal_request')}</h3>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Payment Method */}
             <div>
               <label htmlFor="payment_method" className="block text-white text-sm font-medium mb-2">
-                Payment Method <span className="text-red-400">*</span>
+                {t('payment_method')} <span className="text-red-400">*</span>
               </label>
               <select
                 id="payment_method"
@@ -166,7 +177,7 @@ const Withdraw = () => {
             {/* Account Name */}
             <div>
               <label htmlFor="account_name" className="block text-white text-sm font-medium mb-2">
-                Account Name <span className="text-red-400">*</span>
+                {t('account_name')} <span className="text-red-400">*</span>
               </label>
               <input
                 type="text"
@@ -183,7 +194,7 @@ const Withdraw = () => {
             {/* Account Number */}
             <div>
               <label htmlFor="account_number" className="block text-white text-sm font-medium mb-2">
-                Account Number <span className="text-red-400">*</span>
+                {t('account_number')} <span className="text-red-400">*</span>
               </label>
               <input
                 type="text"
@@ -200,7 +211,7 @@ const Withdraw = () => {
             {/* Amount */}
             <div>
               <label htmlFor="amount" className="block text-white text-sm font-medium mb-2">
-                Amount (MMK) <span className="text-red-400">*</span>
+                {t('withdraw_amount')} (MMK) <span className="text-red-400">*</span>
               </label>
               <input
                 type="number"
@@ -217,7 +228,7 @@ const Withdraw = () => {
 
             {/* Quick Amount Buttons */}
             <div>
-              <label className="block text-white text-sm font-medium mb-2">Quick Amount</label>
+              <label className="block text-white text-sm font-medium mb-2">{t('quick_amounts')}</label>
               <div className="grid grid-cols-3 gap-2">
                 {quickAmounts.map((amount) => (
                   <button
@@ -235,7 +246,7 @@ const Withdraw = () => {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-white text-sm font-medium mb-2">
-                Password <span className="text-red-400">*</span>
+                {t('password')} <span className="text-red-400">*</span>
               </label>
               <input
                 type="password"
@@ -274,7 +285,7 @@ const Withdraw = () => {
                   Processing...
                 </div>
               ) : (
-                'Submit Withdrawal Request'
+                t('submit_withdraw')
               )}
             </button>
           </form>

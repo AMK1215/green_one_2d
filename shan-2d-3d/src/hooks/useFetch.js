@@ -12,6 +12,7 @@ const useFetch = (url) => {
         let signal = abortController.signal;
 
         setLoading(true);
+        setError(null); // Clear previous errors
         console.log('Fetching URL:', url);
         
         fetch(url, {
@@ -19,15 +20,16 @@ const useFetch = (url) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': "Bearer " + localStorage.getItem('token')
+                'Authorization': "Bearer " + localStorage.getItem('auth_token')
             },
             signal
         })
             .then(res => {
                 console.log('Response status:', res.status, 'for URL:', url);
                 if(res.status === 401){
-                    localStorage.removeItem('token');
+                    localStorage.removeItem('auth_token');
                     navigate('/?type=all');
+                    return;
                 }
                 if (!res.ok) {
                     throw Error("Something Went Wrong!");
@@ -35,15 +37,20 @@ const useFetch = (url) => {
                 return res.json();
             })
             .then(data => {
-                console.log('API Response for', url, ':', data);
-                setData(data.data);
-                setLoading(false);
+                // Only update state if the request wasn't aborted
+                if (!signal.aborted) {
+                    console.log('API Response for', url, ':', data);
+                    setData(data.data);
+                    setLoading(false);
+                }
             })
             .catch(e => {
-                console.error('API Error for', url, ':', e.message);
-                setError(e.message);
-                setLoading(false);
-            //   navigate('/');
+                // Only log errors if they're not due to abort
+                if (e.name !== 'AbortError') {
+                    console.error('API Error for', url, ':', e.message);
+                    setError(e.message);
+                    setLoading(false);
+                }
             });
 
         // Cleanup function
@@ -51,7 +58,7 @@ const useFetch = (url) => {
             abortController.abort();
         };
 
-    }, [url]);
+    }, [url, navigate]);
 
     return { data, loading, error };
 }

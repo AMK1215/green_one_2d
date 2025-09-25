@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { LanguageContext } from '../contexts/LanguageContext';
 import apiService from '../services/apiService';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 const Transactions = () => {
   const [depositLogs, setDepositLogs] = useState([]);
@@ -12,6 +14,15 @@ const Transactions = () => {
   
   const { user } = useAuth();
   const navigate = useNavigate();
+  const languageContext = useContext(LanguageContext);
+  
+  // Add error handling for missing context
+  if (!languageContext) {
+    console.error('Transactions must be used within a LanguageProvider');
+    return <div>Loading...</div>;
+  }
+  
+  const { t } = languageContext;
 
   useEffect(() => {
     loadTransactionLogs();
@@ -34,7 +45,7 @@ const Transactions = () => {
       }
     } catch (error) {
       console.error('Error loading transaction logs:', error);
-      setError('Failed to load transaction history');
+      setError(t('failed_to_load_transaction_history'));
     } finally {
       setLoading(false);
     }
@@ -74,7 +85,7 @@ const Transactions = () => {
       return (
         <div className="text-center py-8">
           <div className="text-4xl mb-4">📊</div>
-          <p className="text-gray-300">No {type} transactions found</p>
+          <p className="text-gray-300">{t('no_transactions')}</p>
         </div>
       );
     }
@@ -86,7 +97,7 @@ const Transactions = () => {
             <div className="flex justify-between items-start mb-2">
               <div>
                 <h4 className="text-white font-medium">
-                  {type === 'deposit' ? '💰 Deposit' : '💸 Withdrawal'}
+                  {type === 'deposit' ? `💰 ${t('deposit')}` : `💸 ${t('withdraw')}`}
                 </h4>
                 <p className="text-gray-300 text-sm">
                   {formatDate(transaction.created_at)}
@@ -97,7 +108,7 @@ const Transactions = () => {
                   {type === 'deposit' ? '+' : '-'}{transaction.amount ? transaction.amount.toLocaleString() : '0'} MMK
                 </div>
                 <div className={`text-sm ${getStatusColor(transaction.status)}`}>
-                  {transaction.status || 'Pending'}
+                  {transaction.status || t('pending')}
                 </div>
               </div>
             </div>
@@ -172,8 +183,8 @@ const Transactions = () => {
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">Transaction History</h2>
-          <p className="text-gold text-sm md:text-base">View your deposit and withdrawal history</p>
+          <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">{t('transaction_history')}</h2>
+          <p className="text-gold text-sm md:text-base">{t('view_deposit_withdraw_history')}</p>
         </div>
 
         {/* Balance Card */}
@@ -204,7 +215,7 @@ const Transactions = () => {
                   : 'text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10'
               }`}
             >
-              Deposits ({depositLogs.length})
+              {t('deposit_history')} ({depositLogs.length})
             </button>
             <button
               onClick={() => setActiveTab('withdrawals')}
@@ -214,7 +225,7 @@ const Transactions = () => {
                   : 'text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10'
               }`}
             >
-              Withdrawals ({withdrawLogs.length})
+              {t('withdraw_history')} ({withdrawLogs.length})
             </button>
           </div>
 

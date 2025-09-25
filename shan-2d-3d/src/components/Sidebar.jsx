@@ -1,24 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { LanguageContext } from '../contexts/LanguageContext';
 
 const Sidebar = ({ isOpen, onClose }) => {
     const { logout } = useAuth();
+    const languageContext = useContext(LanguageContext);
     const location = useLocation();
+    
+    // Add error handling for missing context
+    if (!languageContext) {
+        console.error('Sidebar must be used within a LanguageProvider');
+        return null;
+    }
+    
+    const { t } = languageContext;
 
     const navigationItems = [
-        { name: 'Dashboard', path: '/dashboard', icon: '🏠' },
-        { name: '2D Lottery', path: '/2d', icon: '🎯' },
-        { name: 'Deposit', path: '/deposit', icon: '💰' },
-        { name: 'Withdraw', path: '/withdraw', icon: '💸' },
-        { name: 'Profile', path: '/profile', icon: '👤' },
-        { name: 'Transactions', path: '/transactions', icon: '📊' },
-        { name: 'Shan Game Log', path: '/shan-game-log', icon: '🎮' },
-        { name: '2D Winners', path: '/2d/daily-winner', icon: '🏆' },
-        { name: '2D History', path: '/morning-bet-slip', icon: '📋' },
-        { name: 'Banks', path: '/banks', icon: '🏦' },
-        { name: 'Contact', path: '/contact', icon: '📞' },
-        { name: 'Promotions', path: '/promotions', icon: '🎁' },
+        { name: t('dashboard'), path: '/dashboard', icon: '🏠' },
+        { name: t('two_d'), path: '/2d', icon: '🎯' },
+        { name: t('three_d'), path: '/3d', icon: '🎲' },
+        { name: t('deposit'), path: '/deposit', icon: '💰' },
+        { name: t('withdraw'), path: '/withdraw', icon: '💸' },
+        { name: t('profile'), path: '/profile', icon: '👤' },
+        { name: t('transactions'), path: '/transactions', icon: '📊' },
+        { name: t('two_d_winners'), path: '/2d/daily-winner', icon: '🏆' },
+        { name: t('two_d_history'), path: '/morning-bet-slip', icon: '📋' },
+        { name: t('three_d_winners'), path: '/3d/winner', icon: '🏆' },
+        { name: t('three_d_history'), path: '/3d/history', icon: '📋' },
     ];
 
     const handleLogout = () => {
@@ -72,7 +81,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                 className="w-full flex items-center justify-center px-4 py-3 text-sm font-medium text-red-400 hover:bg-red-900 hover:bg-opacity-20 hover:text-red-300 rounded-lg transition-all duration-200 border border-red-400 border-opacity-30 hover:border-opacity-50"
                             >
                                 <span className="text-lg mr-3">🚪</span>
-                                Logout
+                                {t('logout')}
                             </button>
                         </div>
                     </nav>

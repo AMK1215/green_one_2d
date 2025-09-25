@@ -127,7 +127,7 @@ const TwoDConfirmPage = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Authorization": `Bearer ${localStorage.getItem("auth_token")}`,
                 },
                 body: JSON.stringify({
                     totalAmount: total,
@@ -140,7 +140,7 @@ const TwoDConfirmPage = () => {
                 try {
                     const profileRes = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.USER}`, {
                         headers: {
-                            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                            "Authorization": `Bearer ${localStorage.getItem("auth_token")}`,
                         },
                     });
                     

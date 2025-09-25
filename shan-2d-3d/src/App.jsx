@@ -28,6 +28,12 @@ import TwoDConfirmPage from './pages/two_d/TwoDConfirmPage';
 import TwoDDailyWinner from './pages/two_d/TwoDDailyWinner';
 import MorningBetSlipDisplay from './pages/two_d/MorningBetSlipDisplay';
 
+// 3D Lottery Pages
+import ThreeDPage from './pages/three_d/ThreeDPage';
+import ThreeDConfirmPage from './pages/three_d/ThreeDConfirmPage';
+import ThreeDHistory from './pages/three_d/ThreeDHistory';
+import ThreeDWinner from './pages/three_d/ThreeDWinner';
+
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -260,6 +266,48 @@ function AppRoutes() {
           <ProtectedRoute>
             <Layout>
               <MorningBetSlipDisplay />
+            </Layout>
+          </ProtectedRoute>
+        } 
+      />
+
+      {/* 3D Lottery Routes */}
+      <Route 
+        path="/3d" 
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ThreeDPage />
+            </Layout>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/3d/confirm" 
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ThreeDConfirmPage />
+            </Layout>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/3d/history" 
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ThreeDHistory />
+            </Layout>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/3d/winner" 
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ThreeDWinner />
             </Layout>
           </ProtectedRoute>
         } 

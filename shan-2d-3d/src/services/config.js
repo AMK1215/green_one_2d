@@ -35,6 +35,13 @@ const CONFIG = {
         TWO_D_RESULTS: '/twod-results',
         TWO_D_ANNOUNCEMENTS: '/twod-announcements',
         TWO_D_SETTINGS: '/twod-settings',
+        
+        // 3D Lottery Endpoints
+        THREE_D_BET: '/threed-bet',
+        THREE_D_WINNERS: '/threed-winners',
+        THREE_D_BET_SLIPS: '/threed-bet-slips',
+        THREE_D_HISTORY: '/threed-history',
+        THREE_D_RESULTS: '/threed-results',
     }
 };
 

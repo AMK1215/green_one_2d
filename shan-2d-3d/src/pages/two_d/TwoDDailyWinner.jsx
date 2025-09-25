@@ -41,12 +41,12 @@ const TwoDDailyWinner = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
                 }
             });
 
             if (response.status === 401) {
-                localStorage.removeItem('token');
+                localStorage.removeItem('auth_token');
                 navigate('/login');
                 return;
             }

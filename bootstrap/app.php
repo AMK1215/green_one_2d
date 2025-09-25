@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Illuminate\Http\Middleware\HandleCors;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,11 +18,18 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
+        // Add CORS middleware to API routes - run CORS before everything else
+        $middleware->api(prepend: [
+            HandleCors::class,
+        ]);
+
         $middleware->web(append: [
             HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        
 
         // Register custom middleware aliases
         $middleware->alias([
@@ -34,6 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'betting.access' => \App\Http\Middleware\BettingAccess::class,
             'transaction.key' => \App\Http\Middleware\TransactionMiddleware::class,
             'auth.gates' => \App\Http\Middleware\AuthGates::class,
+            'cors' => HandleCors::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

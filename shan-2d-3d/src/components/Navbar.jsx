@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import apiService from '../services/apiService';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar = ({ user, onMenuClick, sidebarOpen }) => {
     const [balance, setBalance] = useState(0);
@@ -102,8 +103,10 @@ const Navbar = ({ user, onMenuClick, sidebarOpen }) => {
                         </div>
                     </div>
 
-                    {/* Right side - User info */}
+                    {/* Right side - Language switcher and User info */}
                     <div className="flex items-center space-x-4">
+                        <LanguageSwitcher className="hidden sm:block" />
+                        
                         <div className="text-right">
                             <p className="text-sm font-medium text-white">
                                 {user?.name || user?.user_name || 'Player'}

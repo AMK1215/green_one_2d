@@ -39,10 +39,23 @@ use App\Http\Controllers\Api\PoneWine\PoneWineClientBalanceUpdateController;
 use App\Http\Controllers\Api\PoneWine\PoneWineLaunchGameController;
 
 
+
+
+
+
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/player-change-password', [AuthController::class, 'playerChangePassword']);
 Route::post('/logout', [AuthController::class, 'logout']);
+
+// slot route 
+Route::prefix('v1/api/seamless')->group(function () {
+    Route::post('balance', [GetBalanceController::class, 'getBalance']);
+    Route::post('withdraw', [WithdrawController::class, 'withdraw']);
+    Route::post('deposit', [DepositController::class, 'deposit']);
+    Route::post('pushbetdata', [PushBetDataController::class, 'pushBetData']);
+});
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
