@@ -22,13 +22,15 @@ class LotteryTicket extends Model
         'payment_completed_at',
         'payment_image',
         'payment_verified_by',
-        'payment_verified_at'
+        'payment_verified_at',
+        'agent_id'
     ];
 
     protected $casts = [
         'selected_datetime' => 'datetime',
         'payment_completed_at' => 'datetime',
-        'amount' => 'decimal:2'
+        'amount' => 'decimal:2',
+        'payment_verified_at' => 'datetime'
     ];
 
     /**

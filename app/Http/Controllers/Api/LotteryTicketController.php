@@ -11,7 +11,11 @@ use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use App\Traits\HttpResponses;
+use App\Models\User;
 class LotteryTicketController extends Controller
 {
     /**
@@ -19,10 +23,13 @@ class LotteryTicketController extends Controller
      */
     public function store(StoreLotteryTicketRequest $request): JsonResponse
     {
+       
+       $user = Auth::user();
         try {
             // Log the incoming request for debugging
             Log::info('Lottery ticket creation request received', [
                 'player_id' => $request->player_id,
+                'user_id' => $user->id,
                 'player_user_name' => $request->player_user_name,
                 'selected_digits_count' => count($request->selected_digits),
                 'amount_per_ticket' => $request->amount_per_ticket,
@@ -57,7 +64,8 @@ class LotteryTicketController extends Controller
                     'payment_method' => $request->payment_method ?? 'kpay',
                     'payment_reference' => $request->payment_reference ?? 'KPAY_' . time(),
                     'payment_image' => $paymentImagePath,
-                    'payment_completed_at' => $paymentImagePath ? Carbon::now() : null
+                    'payment_completed_at' => $paymentImagePath ? Carbon::now() : null,
+                    'agent_id' => $user->agent_id
                 ]);
 
                 $tickets[] = [
@@ -66,6 +74,7 @@ class LotteryTicketController extends Controller
                     'amount' => $ticket->amount,
                     'payment_status' => $ticket->payment_status,
                     'payment_image' => $ticket->payment_image,
+                    'agent_id' => $ticket->agent_id,
                     'created_at' => $ticket->created_at->toISOString()
                 ];
 
