@@ -29,14 +29,15 @@ class LotteryTicketController extends Controller
             // Log the incoming request for debugging
             Log::info('Lottery ticket creation request received', [
                 'player_id' => $request->player_id,
-                'user_id' => $user->id,
+                'user_id' => $user ? $user->id : null,
                 'player_user_name' => $request->player_user_name,
                 'selected_digits_count' => count($request->selected_digits),
                 'amount_per_ticket' => $request->amount_per_ticket,
                 'selected_datetime' => $request->selected_datetime,
                 'has_payment_image' => $request->hasFile('payment_image'),
                 'payment_method' => $request->payment_method,
-                'payment_reference' => $request->payment_reference
+                'payment_reference' => $request->payment_reference,
+                'is_authenticated' => $user ? true : false
             ]);
 
             DB::beginTransaction();
@@ -65,7 +66,7 @@ class LotteryTicketController extends Controller
                     'payment_reference' => $request->payment_reference ?? 'KPAY_' . time(),
                     'payment_image' => $paymentImagePath,
                     'payment_completed_at' => $paymentImagePath ? Carbon::now() : null,
-                    'agent_id' => $user->agent_id
+                    'agent_id' => $user ? $user->agent_id : null
                 ]);
 
                 $tickets[] = [

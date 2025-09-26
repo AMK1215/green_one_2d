@@ -100,6 +100,7 @@ Route::get('promotion', [PromotionController::class, 'index']);
 
 
 // Public routes (no authentication required)
+Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('lottery')->group(function () {
     // Store lottery tickets
     Route::post('/tickets', [LotteryTicketController::class, 'store']);
@@ -115,6 +116,7 @@ Route::prefix('lottery')->group(function () {
     
     // Get statistics for date range
     Route::get('/stats/date-range', [LotteryTicketController::class, 'getStatsByDateRange']);
+});
 });
 
 // Protected routes (authentication required)
