@@ -126,16 +126,41 @@ class LotteryTicketController extends Controller
      */
     public function getPlayerTickets(Request $request): JsonResponse
     {
+        // For authenticated routes, use the authenticated user's ID
+        $user = Auth::user();
+        $playerId = $request->player_id ?? ($user ? $user->id : null);
+
         $request->validate([
-            'player_id' => 'required|integer',
+            'player_id' => 'nullable|integer',
             'date' => 'nullable|date',
             'status' => 'nullable|in:pending,completed,failed',
             'limit' => 'nullable|integer|min:1|max:100',
             'page' => 'nullable|integer|min:1'
         ]);
 
+        // If no player_id provided and user is not authenticated, return error
+        if (!$playerId) {
+            return response()->json([
+                'status' => 'Request failed.',
+                'message' => 'Player ID is required or user must be authenticated.',
+                'data' => null
+            ], 400);
+        }
+
         try {
-            $query = LotteryTicket::forPlayer($request->player_id);
+            Log::info('Getting player tickets', [
+                'player_id' => $playerId,
+                'user_id' => $user ? $user->id : null,
+                'is_authenticated' => $user ? true : false,
+                'filters' => [
+                    'date' => $request->date,
+                    'status' => $request->status,
+                    'page' => $request->page,
+                    'limit' => $request->limit
+                ]
+            ]);
+
+            $query = LotteryTicket::forPlayer($playerId);
 
             if ($request->date) {
                 $query->whereDate('selected_datetime', $request->date);
@@ -153,7 +178,7 @@ class LotteryTicketController extends Controller
                 ->limit($limit)
                 ->get();
 
-            $totalCount = LotteryTicket::forPlayer($request->player_id)
+            $totalCount = LotteryTicket::forPlayer($playerId)
                 ->when($request->date, function($q) use ($request) {
                     return $q->whereDate('selected_datetime', $request->date);
                 })
@@ -179,7 +204,8 @@ class LotteryTicketController extends Controller
         } catch (\Exception $e) {
             Log::error('Failed to retrieve player tickets', [
                 'error' => $e->getMessage(),
-                'player_id' => $request->player_id
+                'player_id' => $playerId,
+                'user_id' => $user ? $user->id : null
             ]);
 
             return response()->json([
@@ -189,6 +215,71 @@ class LotteryTicketController extends Controller
             ], 500);
         }
     }
+    // public function getPlayerTickets(Request $request): JsonResponse
+    // {
+    //     $request->validate([
+    //         'player_id' => 'required|integer',
+    //         'date' => 'nullable|date',
+    //         'status' => 'nullable|in:pending,completed,failed',
+    //         'limit' => 'nullable|integer|min:1|max:100',
+    //         'page' => 'nullable|integer|min:1'
+    //     ]);
+
+    //     try {
+    //         $query = LotteryTicket::forPlayer($request->player_id);
+
+    //         if ($request->date) {
+    //             $query->whereDate('selected_datetime', $request->date);
+    //         }
+
+    //         if ($request->status) {
+    //             $query->where('payment_status', $request->status);
+    //         }
+
+    //         $limit = $request->limit ?? 20;
+    //         $page = $request->page ?? 1;
+
+    //         $tickets = $query->orderBy('selected_datetime', 'desc')
+    //             ->offset(($page - 1) * $limit)
+    //             ->limit($limit)
+    //             ->get();
+
+    //         $totalCount = LotteryTicket::forPlayer($request->player_id)
+    //             ->when($request->date, function($q) use ($request) {
+    //                 return $q->whereDate('selected_datetime', $request->date);
+    //             })
+    //             ->when($request->status, function($q) use ($request) {
+    //                 return $q->where('payment_status', $request->status);
+    //             })
+    //             ->count();
+
+    //         return response()->json([
+    //             'status' => 'Request was successful.',
+    //             'message' => 'Player tickets retrieved successfully.',
+    //             'data' => [
+    //                 'tickets' => $tickets,
+    //                 'pagination' => [
+    //                     'current_page' => $page,
+    //                     'per_page' => $limit,
+    //                     'total' => $totalCount,
+    //                     'last_page' => ceil($totalCount / $limit)
+    //                 ]
+    //             ]
+    //         ]);
+
+    //     } catch (\Exception $e) {
+    //         Log::error('Failed to retrieve player tickets', [
+    //             'error' => $e->getMessage(),
+    //             'player_id' => $request->player_id
+    //         ]);
+
+    //         return response()->json([
+    //             'status' => 'Request failed.',
+    //             'message' => 'Failed to retrieve player tickets: ' . $e->getMessage(),
+    //             'data' => null
+    //         ], 500);
+    //     }
+    // }
 
     /**
      * Update payment status
