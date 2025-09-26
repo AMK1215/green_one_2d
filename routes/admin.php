@@ -39,6 +39,23 @@ Route::prefix('admin')->group(function () {
         return response()->json(['message' => 'Admin routes working!']);
     })->name('admin.test');
     
+    // Debug route to check current user and role
+    Route::get('/debug-user', function () {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Not authenticated']);
+        }
+        
+        return response()->json([
+            'user_id' => $user->id,
+            'user_name' => $user->user_name,
+            'user_type' => $user->type,
+            'roles' => $user->roles->pluck('title'),
+            'has_owner_role' => $user->hasRole('Owner'),
+            'role_check_method' => 'hasRole("Owner")'
+        ]);
+    })->name('admin.debug-user');
+    
 });
 
 // Owner Dashboard Routes (Owner only)
