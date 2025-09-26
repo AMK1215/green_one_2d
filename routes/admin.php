@@ -38,6 +38,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/test', function () {
         return response()->json(['message' => 'Admin routes working!']);
     })->name('admin.test');
+    
 });
 
 // Owner Dashboard Routes (Owner only)

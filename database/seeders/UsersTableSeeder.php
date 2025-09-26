@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
         $owner = $this->createUser(
             UserType::Owner,
             'Owner',
-            'GreenOne',
+            'OWNER001',
             '09123456789',
             null,
             'OWNER'.Str::random(6)
