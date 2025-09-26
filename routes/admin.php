@@ -39,6 +39,37 @@ Route::prefix('admin')->group(function () {
         return response()->json(['message' => 'Admin routes working!']);
     })->name('admin.test');
     
+    // Debug route to check current user
+    Route::get('/debug-user', function () {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Not authenticated']);
+        }
+        
+        $permissions = $user->roles->flatMap(function($role) {
+            return $role->permissions->pluck('title');
+        });
+        
+        return response()->json([
+            'user_id' => $user->id,
+            'user_name' => $user->user_name,
+            'user_type' => $user->type,
+            'roles' => $user->roles->pluck('title'),
+            'has_owner_role' => $user->hasRole('Owner'),
+            'has_agent_role' => $user->hasRole('Agent'),
+            'permissions' => $permissions->toArray(),
+            'has_lottery_ticket_index' => $permissions->contains('lottery_ticket_index')
+        ]);
+    })->name('admin.debug-user');
+    
+    // Temporary test route for lottery tickets (bypasses middleware)
+    Route::get('/test-lottery-tickets', function () {
+        return response()->json([
+            'message' => 'Lottery tickets route accessible',
+            'user' => auth()->user() ? auth()->user()->user_name : 'Not authenticated'
+        ]);
+    })->name('admin.test-lottery-tickets');
+    
     
 });
 

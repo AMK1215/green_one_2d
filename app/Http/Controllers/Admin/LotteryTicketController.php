@@ -21,9 +21,9 @@ class LotteryTicketController extends Controller
         $query = LotteryTicket::with(['player', 'agent']);
 
         // Role-based filtering
-        if ($user->role_id == 1) { // Owner - can see all data
+        if ($user->hasRole('Owner')) { // Owner - can see all data
             // No additional filtering needed
-        } elseif ($user->role_id == 2) { // Agent - can only see their players' data
+        } elseif ($user->hasRole('Agent')) { // Agent - can only see their players' data
             $query->where('agent_id', $user->id);
         } else {
             // Other roles don't have access
@@ -44,7 +44,7 @@ class LotteryTicketController extends Controller
         }
 
         // Agent filtering (only for Owner)
-        if ($request->filled('agent_id') && $user->role_id == 1) {
+        if ($request->filled('agent_id') && $user->hasRole('Owner')) {
             $query->where('agent_id', $request->agent_id);
         }
 
@@ -57,7 +57,7 @@ class LotteryTicketController extends Controller
         $summaryQuery = LotteryTicket::query();
         
         // Apply same filters for summary
-        if ($user->role_id == 2) {
+        if ($user->hasRole('Agent')) {
             $summaryQuery->where('agent_id', $user->id);
         }
         if ($request->filled('date_from')) {
@@ -69,7 +69,7 @@ class LotteryTicketController extends Controller
         if ($request->filled('payment_status')) {
             $summaryQuery->where('payment_status', $request->payment_status);
         }
-        if ($request->filled('agent_id') && $user->role_id == 1) {
+        if ($request->filled('agent_id') && $user->hasRole('Owner')) {
             $summaryQuery->where('agent_id', $request->agent_id);
         }
 
@@ -86,8 +86,10 @@ class LotteryTicketController extends Controller
 
         // Get agents list for Owner
         $agents = [];
-        if ($user->role_id == 1) {
-            $agents = User::where('role_id', 2)
+        if ($user->hasRole('Owner')) {
+            $agents = User::whereHas('roles', function($query) {
+                $query->where('title', 'Agent');
+            })
                 ->select('id', 'user_name', 'name')
                 ->orderBy('user_name')
                 ->get();
@@ -95,7 +97,7 @@ class LotteryTicketController extends Controller
 
         // Get tickets grouped by agent for summary
         $agentSummary = [];
-        if ($user->role_id == 1) {
+        if ($user->hasRole('Owner')) {
             $agentSummaryQuery = LotteryTicket::query();
             if ($request->filled('date_from')) {
                 $agentSummaryQuery->whereDate('selected_datetime', '>=', $request->date_from);
@@ -129,7 +131,7 @@ class LotteryTicketController extends Controller
             'agents' => $agents,
             'agentSummary' => $agentSummary,
             'filters' => $request->only(['date_from', 'date_to', 'payment_status', 'agent_id']),
-            'userRole' => $user->role_id
+            'userRole' => $user->hasRole('Owner') ? 1 : ($user->hasRole('Agent') ? 2 : 3)
         ]);
     }
 
@@ -141,7 +143,7 @@ class LotteryTicketController extends Controller
         $user = auth()->user();
 
         // Check access permissions
-        if ($user->role_id == 2 && $lotteryTicket->agent_id != $user->id) {
+        if ($user->hasRole('Agent') && $lotteryTicket->agent_id != $user->id) {
             abort(403, 'Unauthorized access');
         }
 
@@ -160,7 +162,7 @@ class LotteryTicketController extends Controller
         $user = auth()->user();
 
         // Check access permissions
-        if ($user->role_id == 2 && $lotteryTicket->agent_id != $user->id) {
+        if ($user->hasRole('Agent') && $lotteryTicket->agent_id != $user->id) {
             abort(403, 'Unauthorized access');
         }
 
