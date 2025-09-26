@@ -39,27 +39,11 @@ Route::prefix('admin')->group(function () {
         return response()->json(['message' => 'Admin routes working!']);
     })->name('admin.test');
     
-    // Debug route to check current user and role
-    Route::get('/debug-user', function () {
-        $user = auth()->user();
-        if (!$user) {
-            return response()->json(['error' => 'Not authenticated']);
-        }
-        
-        return response()->json([
-            'user_id' => $user->id,
-            'user_name' => $user->user_name,
-            'user_type' => $user->type,
-            'roles' => $user->roles->pluck('title'),
-            'has_owner_role' => $user->hasRole('Owner'),
-            'role_check_method' => 'hasRole("Owner")'
-        ]);
-    })->name('admin.debug-user');
     
 });
 
-// Owner Dashboard Routes (Owner only)
-Route::middleware(['auth', 'check.status', 'owner.only'])->group(function () {
+// Owner Dashboard Routes (Owner and Agent access)
+Route::middleware(['auth', 'check.status', 'agent.or.owner'])->group(function () {
     Route::get('/owner/dashboard', [OwnerDashboardController::class, 'dashboard'])->name('owner.dashboard');
     
     // Agent management routes
@@ -160,10 +144,7 @@ Route::middleware(['auth', 'check.status', 'check.role:Agent'])->group(function 
         Route::get('/agent/transfers', [AgentDashboardController::class, 'transfers'])->name('admin.agent.transfers');
         Route::get('/agent/reports', [AgentDashboardController::class, 'reports'])->name('admin.agent.reports');
         
-        // Lottery Ticket Management (Agent can see their players' tickets)
-        Route::get('/lottery-tickets', [LotteryTicketController::class, 'index'])->name('admin.agent.lottery-tickets.index');
-        Route::get('/lottery-tickets/{lotteryTicket}', [LotteryTicketController::class, 'show'])->name('admin.agent.lottery-tickets.show');
-        Route::patch('/lottery-tickets/{lotteryTicket}/payment-status', [LotteryTicketController::class, 'updatePaymentStatus'])->name('admin.agent.lottery-tickets.update-payment-status');
+        // Lottery Ticket Management (handled by Owner routes with agent.or.owner middleware)
     });
 });
 
