@@ -125,7 +125,7 @@ class LotteryTicketController extends Controller
                 ->get();
         }
 
-        return Inertia::render('Admin/LotteryTickets/Index', [
+        return Inertia::render('admin/LotteryTickets/Index', [
             'tickets' => $tickets,
             'summary' => $summary,
             'agents' => $agents,
@@ -144,7 +144,7 @@ class LotteryTicketController extends Controller
 
         // check access for owner
         if ($user->hasRole('Owner')) {
-            return Inertia::render('Admin/LotteryTickets/Show', [
+            return Inertia::render('admin/LotteryTickets/Show', [
                 'ticket' => $lotteryTicket
             ]);
         }
@@ -156,7 +156,7 @@ class LotteryTicketController extends Controller
 
         $lotteryTicket->load(['player', 'agent']);
 
-        return Inertia::render('Admin/LotteryTickets/Show', [
+        return Inertia::render('admin/LotteryTickets/Show', [
             'ticket' => $lotteryTicket
         ]);
     }
@@ -170,7 +170,7 @@ class LotteryTicketController extends Controller
 
         // check access for owner
         if ($user->hasRole('Owner')) {
-            return Inertia::render('Admin/LotteryTickets/Show', [
+            return Inertia::render('admin/LotteryTickets/Show', [
                 'ticket' => $lotteryTicket
             ]);
         }

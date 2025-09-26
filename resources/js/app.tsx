@@ -5,9 +5,6 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 
-// Ensure lottery ticket pages are included in the build
-import './pages/admin/LotteryTickets/Index';
-import './pages/admin/LotteryTickets/Show';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
