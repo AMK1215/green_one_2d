@@ -77,12 +77,12 @@ class LotteryTicketController extends Controller
             COUNT(*) as total_tickets,
             SUM(amount) as total_amount,
             COUNT(DISTINCT player_id) as total_players,
-            COUNT(CASE WHEN payment_status = "completed" THEN 1 END) as completed_payments,
-            COUNT(CASE WHEN payment_status = "pending" THEN 1 END) as pending_payments,
-            COUNT(CASE WHEN payment_status = "failed" THEN 1 END) as failed_payments,
-            SUM(CASE WHEN payment_status = "completed" THEN amount ELSE 0 END) as completed_amount,
-            SUM(CASE WHEN payment_status = "pending" THEN amount ELSE 0 END) as pending_amount
-        ')->first();
+            COUNT(CASE WHEN payment_status = ? THEN 1 END) as completed_payments,
+            COUNT(CASE WHEN payment_status = ? THEN 1 END) as pending_payments,
+            COUNT(CASE WHEN payment_status = ? THEN 1 END) as failed_payments,
+            SUM(CASE WHEN payment_status = ? THEN amount ELSE 0 END) as completed_amount,
+            SUM(CASE WHEN payment_status = ? THEN amount ELSE 0 END) as pending_amount
+        ', ['completed', 'pending', 'failed', 'completed', 'pending'])->first();
 
         // Get agents list for Owner
         $agents = [];
@@ -117,9 +117,9 @@ class LotteryTicketController extends Controller
                     COUNT(lottery_tickets.id) as ticket_count,
                     SUM(lottery_tickets.amount) as total_amount,
                     COUNT(DISTINCT lottery_tickets.player_id) as player_count,
-                    COUNT(CASE WHEN lottery_tickets.payment_status = "completed" THEN 1 END) as completed_count,
-                    COUNT(CASE WHEN lottery_tickets.payment_status = "pending" THEN 1 END) as pending_count
-                ')
+                    COUNT(CASE WHEN lottery_tickets.payment_status = ? THEN 1 END) as completed_count,
+                    COUNT(CASE WHEN lottery_tickets.payment_status = ? THEN 1 END) as pending_count
+                ', ['completed', 'pending'])
                 ->groupBy('users.id', 'users.user_name', 'users.name')
                 ->orderBy('total_amount', 'desc')
                 ->get();
@@ -142,6 +142,13 @@ class LotteryTicketController extends Controller
     {
         $user = auth()->user();
 
+        // check access for owner
+        if ($user->hasRole('Owner')) {
+            return Inertia::render('Admin/LotteryTickets/Show', [
+                'ticket' => $lotteryTicket
+            ]);
+        }
+
         // Check access permissions
         if ($user->hasRole('Agent') && $lotteryTicket->agent_id != $user->id) {
             abort(403, 'Unauthorized access');
@@ -160,6 +167,13 @@ class LotteryTicketController extends Controller
     public function updatePaymentStatus(Request $request, LotteryTicket $lotteryTicket)
     {
         $user = auth()->user();
+
+        // check access for owner
+        if ($user->hasRole('Owner')) {
+            return Inertia::render('Admin/LotteryTickets/Show', [
+                'ticket' => $lotteryTicket
+            ]);
+        }
 
         // Check access permissions
         if ($user->hasRole('Agent') && $lotteryTicket->agent_id != $user->id) {
@@ -187,9 +201,9 @@ class LotteryTicketController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->role_id != 1) {
-            abort(403, 'Only owners can view agent statistics');
-        }
+        // if (!$user->hasRole('Owner')) {
+        //     abort(403, 'Only owners can view agent statistics');
+        // }
 
         $agentId = $request->get('agent_id');
         $dateFrom = $request->get('date_from', Carbon::today()->subDays(30));
