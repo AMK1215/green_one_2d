@@ -30,7 +30,8 @@ import {
     Award,
     CreditCard,
     MessageSquare,
-    TrendingUp
+    TrendingUp,
+    Ticket
 } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -140,6 +141,15 @@ function getNavItems(): NavItem[] {
             });
         }
 
+        // Add Lottery Tickets if Owner has permission
+        if (userPermissions.includes('lottery_ticket_index')) {
+            ownerNavItems.push({
+                title: 'Lottery Tickets',
+                href: '/admin/lottery-tickets',
+                icon: Ticket,
+            });
+        }
+
         // Add Reports if Owner has permission
         if (userPermissions.includes('report_check')) {
             ownerNavItems.push({
@@ -219,6 +229,15 @@ function getNavItems(): NavItem[] {
                 title: 'Transfers',
                 href: '/admin/agent/transfers',
                 icon: ArrowLeftRight,
+            });
+        }
+
+        // Add Lottery Tickets if Agent has permission
+        if (userPermissions.includes('lottery_ticket_index')) {
+            agentNavItems.push({
+                title: 'Lottery Tickets',
+                href: '/admin/lottery-tickets',
+                icon: Ticket,
             });
         }
 

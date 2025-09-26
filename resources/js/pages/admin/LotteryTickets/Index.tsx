@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
+// Route helper will be available globally
 import AppLayout from '@/layouts/app-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
-import { Button } from '@/Components/ui/button';
-import { Input } from '@/Components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
-import { Badge } from '@/Components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+// Using standard HTML table elements instead of UI components
 import { Calendar, Filter, Eye, DollarSign, Users, Ticket, CheckCircle, Clock, XCircle } from 'lucide-react';
 
 interface LotteryTicket {
@@ -94,7 +95,7 @@ export default function Index({ tickets, summary, agents, agentSummary, filters,
             }
         });
         
-        router.get(route('admin.lottery-tickets.index'), newFilters, {
+        router.get('/admin/lottery-tickets', newFilters, {
             preserveState: true,
             replace: true
         });
@@ -102,7 +103,7 @@ export default function Index({ tickets, summary, agents, agentSummary, filters,
 
     const clearFilters = () => {
         setLocalFilters({});
-        router.get(route('admin.lottery-tickets.index'), {}, {
+        router.get('/admin/lottery-tickets', {}, {
             preserveState: true,
             replace: true
         });
@@ -324,49 +325,49 @@ export default function Index({ tickets, summary, agents, agentSummary, filters,
                     </CardHeader>
                     <CardContent>
                         <div className="overflow-x-auto">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>ID</TableHead>
-                                        <TableHead>Player</TableHead>
-                                        <TableHead>Digit</TableHead>
-                                        <TableHead>Amount</TableHead>
-                                        <TableHead>Date/Time</TableHead>
-                                        <TableHead>Status</TableHead>
-                                        <TableHead>Payment Method</TableHead>
-                                        {userRole === 1 && <TableHead>Agent</TableHead>}
-                                        <TableHead>Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
+                            <table className="w-full border-collapse">
+                                <thead>
+                                    <tr className="border-b">
+                                        <th className="text-left p-3 font-medium">ID</th>
+                                        <th className="text-left p-3 font-medium">Player</th>
+                                        <th className="text-left p-3 font-medium">Digit</th>
+                                        <th className="text-left p-3 font-medium">Amount</th>
+                                        <th className="text-left p-3 font-medium">Date/Time</th>
+                                        <th className="text-left p-3 font-medium">Status</th>
+                                        <th className="text-left p-3 font-medium">Payment Method</th>
+                                        {userRole === 1 && <th className="text-left p-3 font-medium">Agent</th>}
+                                        <th className="text-left p-3 font-medium">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     {tickets.data.map((ticket) => (
-                                        <TableRow key={ticket.id}>
-                                            <TableCell className="font-medium">{ticket.id}</TableCell>
-                                            <TableCell>
+                                        <tr key={ticket.id} className="border-b hover:bg-gray-50">
+                                            <td className="p-3 font-medium">{ticket.id}</td>
+                                            <td className="p-3">
                                                 <div>
                                                     <div className="font-medium">{ticket.player_user_name}</div>
                                                     {ticket.player && (
                                                         <div className="text-sm text-gray-500">{ticket.player.name}</div>
                                                     )}
                                                 </div>
-                                            </TableCell>
-                                            <TableCell>
+                                            </td>
+                                            <td className="p-3">
                                                 <Badge variant="outline">{ticket.selected_digit}</Badge>
-                                            </TableCell>
-                                            <TableCell className="font-medium">
+                                            </td>
+                                            <td className="p-3 font-medium">
                                                 {formatCurrency(ticket.amount)}
-                                            </TableCell>
-                                            <TableCell className="text-sm">
+                                            </td>
+                                            <td className="p-3 text-sm">
                                                 {formatDate(ticket.selected_datetime)}
-                                            </TableCell>
-                                            <TableCell>
+                                            </td>
+                                            <td className="p-3">
                                                 {getStatusBadge(ticket.payment_status)}
-                                            </TableCell>
-                                            <TableCell className="text-sm">
+                                            </td>
+                                            <td className="p-3 text-sm">
                                                 {ticket.payment_method}
-                                            </TableCell>
+                                            </td>
                                             {userRole === 1 && (
-                                                <TableCell>
+                                                <td className="p-3">
                                                     {ticket.agent ? (
                                                         <div>
                                                             <div className="font-medium">{ticket.agent.name}</div>
@@ -375,21 +376,21 @@ export default function Index({ tickets, summary, agents, agentSummary, filters,
                                                     ) : (
                                                         <span className="text-gray-400">No Agent</span>
                                                     )}
-                                                </TableCell>
+                                                </td>
                                             )}
-                                            <TableCell>
+                                            <td className="p-3">
                                                 <Link
-                                                    href={route('admin.lottery-tickets.show', ticket.id)}
+                                                    href={`/admin/lottery-tickets/${ticket.id}`}
                                                     className="inline-flex items-center px-2 py-1 text-sm text-blue-600 hover:text-blue-800"
                                                 >
                                                     <Eye className="w-4 h-4 mr-1" />
                                                     View
                                                 </Link>
-                                            </TableCell>
-                                        </TableRow>
+                                            </td>
+                                        </tr>
                                     ))}
-                                </TableBody>
-                            </Table>
+                                </tbody>
+                            </table>
                         </div>
 
                         {/* Pagination */}

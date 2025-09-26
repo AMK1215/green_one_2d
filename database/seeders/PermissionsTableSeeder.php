@@ -264,6 +264,32 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
 
+            // Lottery Ticket Management (Owner has full control)
+            [
+                'title' => 'lottery_ticket_index',
+                'group' => 'lottery_ticket',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'lottery_ticket_show',
+                'group' => 'lottery_ticket',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'lottery_ticket_update_status',
+                'group' => 'lottery_ticket',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'lottery_ticket_agent_stats',
+                'group' => 'lottery_ticket',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
             // Reports (Owner has full access)
             [
                 'title' => 'report_check',

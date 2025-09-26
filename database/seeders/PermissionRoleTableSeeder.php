@@ -67,6 +67,12 @@ class PermissionRoleTableSeeder extends Seeder
             '2d_limit_management',
             '2d_report_management',
 
+            // Lottery Ticket Management (Full Control)
+            'lottery_ticket_index',
+            'lottery_ticket_show',
+            'lottery_ticket_update_status',
+            'lottery_ticket_agent_stats',
+
             // Reports (Full Access)
             'report_check',
             'report_agent',
@@ -116,6 +122,11 @@ class PermissionRoleTableSeeder extends Seeder
             'payment_type_create',
             'payment_type_edit',
             'payment_type_delete',
+
+            // Lottery Ticket Management (Limited to their players)
+            'lottery_ticket_index',
+            'lottery_ticket_show',
+            'lottery_ticket_update_status',
 
             // Agent Reports
             'agent_report_player',

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
+// Route helper will be available globally
 import AppLayout from '@/layouts/app-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
-import { Button } from '@/Components/ui/button';
-import { Badge } from '@/Components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, CheckCircle, Clock, XCircle, DollarSign, Calendar, User, CreditCard, Image } from 'lucide-react';
 
 interface LotteryTicket {
@@ -45,13 +46,13 @@ export default function Show({ ticket }: Props) {
     const handleStatusUpdate = (newStatus: string) => {
         setIsUpdating(true);
         
-        router.patch(route('admin.lottery-tickets.update-payment-status', ticket.id), {
+        router.patch(`/admin/lottery-tickets/${ticket.id}/payment-status`, {
             payment_status: newStatus,
             payment_verified_by: 'Admin'
         }, {
             onFinish: () => setIsUpdating(false),
             onSuccess: () => {
-                setPaymentStatus(newStatus);
+                setPaymentStatus(newStatus as 'pending' | 'completed' | 'failed');
             }
         });
     };
@@ -93,7 +94,7 @@ export default function Show({ ticket }: Props) {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                         <Link
-                            href={route('admin.lottery-tickets.index')}
+                            href="/admin/lottery-tickets"
                             className="inline-flex items-center px-3 py-2 text-sm text-gray-600 hover:text-gray-800"
                         >
                             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -266,7 +267,7 @@ export default function Show({ ticket }: Props) {
                                             className="w-full h-auto rounded-lg"
                                             onError={(e) => {
                                                 e.currentTarget.style.display = 'none';
-                                                e.currentTarget.nextElementSibling!.style.display = 'block';
+                                                (e.currentTarget.nextElementSibling as HTMLElement)!.style.display = 'block';
                                             }}
                                         />
                                         <div className="hidden text-center text-gray-500 py-8">
