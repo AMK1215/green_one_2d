@@ -27,8 +27,8 @@ class StoreLotteryTicketRequest extends FormRequest
             'selected_digits' => 'required|array|min:1|max:10', // Array of digits
             'selected_digits.*' => 'required|string|size:3|regex:/^[0-9]{3}$/', // 3-digit numbers
             'amount_per_ticket' => 'required|numeric|min:100|max:10000', // Amount per ticket
-            'selected_datetime' => 'required|date|after_or_equal:today',
-            'payment_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max, required
+            'selected_datetime' => 'required|date',
+            'payment_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:50120', // 5MB max, required
             'payment_method' => 'nullable|string|max:50',
             'payment_reference' => 'nullable|string|max:255',
         ];
