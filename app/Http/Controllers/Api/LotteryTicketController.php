@@ -24,6 +24,14 @@ class LotteryTicketController extends Controller
 
             $tickets = [];
             $totalAmount = 0;
+            $paymentImagePath = null;
+
+            // Handle payment image upload if provided
+            if ($request->hasFile('payment_image')) {
+                $image = $request->file('payment_image');
+                $imageName = 'payment_' . time() . '_' . $request->player_id . '.' . $image->getClientOriginalExtension();
+                $paymentImagePath = $image->storeAs('payment_images', $imageName, 'public');
+            }
 
             // Create individual tickets for each selected digit
             foreach ($request->selected_digits as $digit) {
@@ -33,7 +41,11 @@ class LotteryTicketController extends Controller
                     'selected_digit' => $digit,
                     'amount' => $request->amount_per_ticket,
                     'selected_datetime' => Carbon::parse($request->selected_datetime)->setTimezone('Asia/Yangon'),
-                    'payment_status' => 'pending',
+                    'payment_status' => $paymentImagePath ? 'completed' : 'pending',
+                    'payment_method' => $request->payment_method ?? 'kpay',
+                    'payment_reference' => $request->payment_reference ?? 'KPAY_' . time(),
+                    'payment_image' => $paymentImagePath,
+                    'payment_completed_at' => $paymentImagePath ? Carbon::now() : null
                 ]);
 
                 $tickets[] = [
@@ -41,6 +53,7 @@ class LotteryTicketController extends Controller
                     'selected_digit' => $ticket->selected_digit,
                     'amount' => $ticket->amount,
                     'payment_status' => $ticket->payment_status,
+                    'payment_image' => $ticket->payment_image,
                     'created_at' => $ticket->created_at->toISOString()
                 ];
 
@@ -53,7 +66,8 @@ class LotteryTicketController extends Controller
                 'player_id' => $request->player_id,
                 'player_user_name' => $request->player_user_name,
                 'total_tickets' => count($tickets),
-                'total_amount' => $totalAmount
+                'total_amount' => $totalAmount,
+                'payment_image_uploaded' => $paymentImagePath ? true : false
             ]);
 
             return response()->json([
@@ -63,7 +77,8 @@ class LotteryTicketController extends Controller
                     'tickets' => $tickets,
                     'total_tickets' => count($tickets),
                     'total_amount' => $totalAmount,
-                    'payment_status' => 'pending'
+                    'payment_status' => $paymentImagePath ? 'completed' : 'pending',
+                    'payment_image' => $paymentImagePath
                 ]
             ], 201);
 

@@ -28,6 +28,9 @@ class StoreLotteryTicketRequest extends FormRequest
             'selected_digits.*' => 'required|string|size:3|regex:/^[0-9]{3}$/', // 3-digit numbers
             'amount_per_ticket' => 'required|numeric|min:100|max:10000', // Amount per ticket
             'selected_datetime' => 'required|date|after_or_equal:today',
+            'payment_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB max, required
+            'payment_method' => 'nullable|string|max:50',
+            'payment_reference' => 'nullable|string|max:255',
         ];
     }
 
@@ -58,6 +61,12 @@ class StoreLotteryTicketRequest extends FormRequest
             'selected_datetime.required' => 'Selected date and time is required.',
             'selected_datetime.date' => 'Selected date must be a valid date.',
             'selected_datetime.after_or_equal' => 'Selected date cannot be in the past.',
+            'payment_image.required' => 'Payment screenshot is required.',
+            'payment_image.image' => 'Payment image must be a valid image file.',
+            'payment_image.mimes' => 'Payment image must be a JPEG, PNG, JPG, or GIF file.',
+            'payment_image.max' => 'Payment image size cannot exceed 5MB.',
+            'payment_method.max' => 'Payment method cannot exceed 50 characters.',
+            'payment_reference.max' => 'Payment reference cannot exceed 255 characters.',
         ];
     }
 
@@ -75,6 +84,9 @@ class StoreLotteryTicketRequest extends FormRequest
             'selected_digits.*' => 'Lottery Number',
             'amount_per_ticket' => 'Amount Per Ticket',
             'selected_datetime' => 'Selected Date & Time',
+            'payment_image' => 'Payment Screenshot',
+            'payment_method' => 'Payment Method',
+            'payment_reference' => 'Payment Reference',
         ];
     }
 }
