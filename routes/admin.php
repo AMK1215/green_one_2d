@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\TwoD\TwoDigitController;
 use App\Http\Controllers\Admin\OwnerDashboardController;
 use App\Http\Controllers\Admin\AgentDashboardController;
+use App\Http\Controllers\Admin\LotteryTicketController;
 use App\Http\Controllers\PlayerDashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -106,6 +107,12 @@ Route::middleware(['auth', 'check.status', 'owner.only'])->group(function () {
         Route::post('/2d/toggle-head-close', [TwoDigitController::class, 'toggleStatus'])->name('admin.head-close-digit.toggle-status');
         Route::post('/2d/toggle-choose-digit', [TwoDigitController::class, 'toggleChooseDigitStatus'])->name('admin.choose-close-digit.toggle-status');
         Route::post('/2d/toggle-battle', [TwoDigitController::class, 'toggleBattleStatus'])->name('admin.battle.toggle-status');
+        
+        // Lottery Ticket Management (Owner full control)
+        Route::get('/lottery-tickets', [LotteryTicketController::class, 'index'])->name('admin.lottery-tickets.index');
+        Route::get('/lottery-tickets/{lotteryTicket}', [LotteryTicketController::class, 'show'])->name('admin.lottery-tickets.show');
+        Route::patch('/lottery-tickets/{lotteryTicket}/payment-status', [LotteryTicketController::class, 'updatePaymentStatus'])->name('admin.lottery-tickets.update-payment-status');
+        Route::get('/lottery-tickets/agent-stats', [LotteryTicketController::class, 'agentStats'])->name('admin.lottery-tickets.agent-stats');
     });
 });
 
@@ -134,6 +141,11 @@ Route::middleware(['auth', 'check.status', 'check.role:Agent'])->group(function 
         // Agent specific features
         Route::get('/agent/transfers', [AgentDashboardController::class, 'transfers'])->name('admin.agent.transfers');
         Route::get('/agent/reports', [AgentDashboardController::class, 'reports'])->name('admin.agent.reports');
+        
+        // Lottery Ticket Management (Agent can see their players' tickets)
+        Route::get('/lottery-tickets', [LotteryTicketController::class, 'index'])->name('admin.agent.lottery-tickets.index');
+        Route::get('/lottery-tickets/{lotteryTicket}', [LotteryTicketController::class, 'show'])->name('admin.agent.lottery-tickets.show');
+        Route::patch('/lottery-tickets/{lotteryTicket}/payment-status', [LotteryTicketController::class, 'updatePaymentStatus'])->name('admin.agent.lottery-tickets.update-payment-status');
     });
 });
 

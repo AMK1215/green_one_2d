@@ -111,6 +111,14 @@ class LotteryTicket extends Model
     }
 
     /**
+     * Relationship with agent
+     */
+    public function agent()
+    {
+        return $this->belongsTo(User::class, 'agent_id');
+    }
+
+    /**
      * Get total amount for a player on a specific date
      */
     public static function getPlayerTotalAmount($playerId, $date = null)
