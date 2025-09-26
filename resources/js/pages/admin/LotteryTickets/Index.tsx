@@ -88,9 +88,9 @@ export default function Index({ tickets, summary, agents, agentSummary, filters,
         const newFilters = { ...localFilters, [key]: value };
         setLocalFilters(newFilters);
         
-        // Remove empty filters
+        // Remove empty filters and "all" values
         Object.keys(newFilters).forEach(k => {
-            if (!newFilters[k as keyof typeof newFilters]) {
+            if (!newFilters[k as keyof typeof newFilters] || newFilters[k as keyof typeof newFilters] === 'all') {
                 delete newFilters[k as keyof typeof newFilters];
             }
         });
@@ -274,14 +274,14 @@ export default function Index({ tickets, summary, agents, agentSummary, filters,
                             <div>
                                 <label className="text-sm font-medium">Payment Status</label>
                                 <Select
-                                    value={localFilters.payment_status || ''}
+                                    value={localFilters.payment_status || 'all'}
                                     onValueChange={(value) => handleFilterChange('payment_status', value)}
                                 >
                                     <SelectTrigger>
                                         <SelectValue placeholder="All Status" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="">All Status</SelectItem>
+                                        <SelectItem value="all">All Status</SelectItem>
                                         <SelectItem value="pending">Pending</SelectItem>
                                         <SelectItem value="completed">Completed</SelectItem>
                                         <SelectItem value="failed">Failed</SelectItem>
@@ -292,14 +292,14 @@ export default function Index({ tickets, summary, agents, agentSummary, filters,
                                 <div>
                                     <label className="text-sm font-medium">Agent</label>
                                     <Select
-                                        value={localFilters.agent_id || ''}
+                                        value={localFilters.agent_id || 'all'}
                                         onValueChange={(value) => handleFilterChange('agent_id', value)}
                                     >
                                         <SelectTrigger>
                                             <SelectValue placeholder="All Agents" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="">All Agents</SelectItem>
+                                            <SelectItem value="all">All Agents</SelectItem>
                                             {agents.map((agent) => (
                                                 <SelectItem key={agent.id} value={agent.id.toString()}>
                                                     {agent.name} (@{agent.user_name})
