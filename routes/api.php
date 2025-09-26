@@ -38,6 +38,7 @@ use App\Http\Controllers\Api\PoneWine\GameMatchController;
 use App\Http\Controllers\Api\PoneWine\PoneWineClientBalanceUpdateController;
 use App\Http\Controllers\Api\PoneWine\PoneWineLaunchGameController;
 
+use App\Http\Controllers\Api\LotteryTicketController;
 
 
 
@@ -98,3 +99,37 @@ Route::get('promotion', [PromotionController::class, 'index']);
 
 
 
+// Public routes (no authentication required)
+Route::prefix('lottery')->group(function () {
+    // Store lottery tickets
+    Route::post('/tickets', [LotteryTicketController::class, 'store']);
+    
+    // Get player's tickets
+    Route::get('/tickets/player/{player_id}', [LotteryTicketController::class, 'getPlayerTickets']);
+    
+    // Update payment status
+    Route::patch('/tickets/payment-status', [LotteryTicketController::class, 'updatePaymentStatus']);
+    
+    // Get today's statistics
+    Route::get('/stats/today', [LotteryTicketController::class, 'getTodayStats']);
+    
+    // Get statistics for date range
+    Route::get('/stats/date-range', [LotteryTicketController::class, 'getStatsByDateRange']);
+});
+
+// Protected routes (authentication required)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('lottery')->group(function () {
+        // Store lottery tickets (authenticated)
+        Route::post('/tickets/auth', [LotteryTicketController::class, 'store']);
+        
+        // Get my tickets (authenticated)
+        Route::get('/tickets/my-tickets', [LotteryTicketController::class, 'getPlayerTickets']);
+        
+        // Update payment status (authenticated)
+        Route::patch('/tickets/payment-status/auth', [LotteryTicketController::class, 'updatePaymentStatus']);
+        
+        // Delete tickets (admin only)
+        Route::delete('/tickets', [LotteryTicketController::class, 'destroy']);
+    });
+});
