@@ -20,6 +20,18 @@ class LotteryTicketController extends Controller
     public function store(StoreLotteryTicketRequest $request): JsonResponse
     {
         try {
+            // Log the incoming request for debugging
+            Log::info('Lottery ticket creation request received', [
+                'player_id' => $request->player_id,
+                'player_user_name' => $request->player_user_name,
+                'selected_digits_count' => count($request->selected_digits),
+                'amount_per_ticket' => $request->amount_per_ticket,
+                'selected_datetime' => $request->selected_datetime,
+                'has_payment_image' => $request->hasFile('payment_image'),
+                'payment_method' => $request->payment_method,
+                'payment_reference' => $request->payment_reference
+            ]);
+
             DB::beginTransaction();
 
             $tickets = [];
